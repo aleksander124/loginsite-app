@@ -8,6 +8,11 @@ RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get clean
 
+RUN groupadd -g 1000 appuser && \
+    useradd -u 1000 -g appuser -s /bin/bash -m appuser
+
+RUN chown -R appuser:appuser /var/www/html
+
 # Stage 2: Build the code
 FROM base AS final
 
@@ -22,6 +27,10 @@ RUN docker-php-ext-install mysqli
 
 # Configure Apache to listen on port 8080
 RUN sed -i 's/80/8080/g' /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
+
+RUN chown -R appuser:appuser /var/www/html
+
+USER appuser
 
 # Start Apache
 CMD ["apache2-foreground"]
