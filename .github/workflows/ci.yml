@@ -29,11 +29,11 @@ jobs:
 
       - name: Build and push Docker image for loginsite-front
         run: |
-          docker build -t ${{ env.QUAY_REGISTRY }}/aleksander124/loginsite-front:${{ env.IMAGE_TAG }} -f loginsite-front/dockerfile loginsite-front
+          docker build -t ${{ env.QUAY_REGISTRY }}/aleksander124/loginsite-front:${{ env.IMAGE_TAG }} -f loginsite-front/Dockerfile loginsite-front
           docker push ${{ env.QUAY_REGISTRY }}/aleksander124/loginsite-front:${{ env.IMAGE_TAG }}
 
       # Build and push the Docker image for loginsite-db
       - name: Build and push Docker image for loginsite-db
         run: |
-          docker build -t ${{ env.QUAY_REGISTRY }}/aleksander124/loginsite-db:${{ env.IMAGE_TAG }} -f loginsite-db/dockerfile loginsite-db
+          docker build -t ${{ env.QUAY_REGISTRY }}/aleksander124/loginsite-db:${{ env.IMAGE_TAG }} -f loginsite-db/Dockerfile loginsite-db
           docker push ${{ env.QUAY_REGISTRY }}/aleksander124/loginsite-db:${{ env.IMAGE_TAG }}
