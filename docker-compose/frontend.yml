@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  loginsite-front:
+    image: quay.io/aleksander124/loginsite-front:latest
+    container_name: loginsite-front
+    networks:
+      - loginsite
+      - traefik-network
+    ports:
+      - "8090:8090"  # Maps container port 8090 to host port 8090
+    environment:
+      DB_HOST: loginsite-db
+      DB_USER: root
+      DB_PASSWORD: root
+      DB_NAME: logowanie
+
+networks:
+  loginsite:
+    external: true
+  traefik-network:
+    external: true

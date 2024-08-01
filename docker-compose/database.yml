@@ -1,0 +1,16 @@
+version: '3.8'  # Specify the Docker Compose version
+
+services:
+  db:
+    image: quay.io/aleksander124/loginsite-db:latest
+    container_name: loginsite-db
+    networks:
+      - loginsite
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+
+networks:
+  loginsite:
+    external: true
