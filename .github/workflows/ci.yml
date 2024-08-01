@@ -7,7 +7,7 @@ on:
 
 env:
   QUAY_REGISTRY: quay.io
-  IMAGE_TAG: v1
+  IMAGE_TAG: v1-fix
 
 jobs:
   build-and-push:
