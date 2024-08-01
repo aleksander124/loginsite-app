@@ -22,8 +22,8 @@ COPY src /var/www/html
 # Set workdir to html site
 WORKDIR /var/www/html
 
-# Enable php mysqli to connect to database
-RUN docker-php-ext-install mysqli
+# Install PHP extensions
+RUN docker-php-ext-install mysqli pdo pdo_mysql
 
 # Configure Apache to listen on port 8080
 RUN sed -i 's/80/8090/g' /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
