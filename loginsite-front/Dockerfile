@@ -28,6 +28,12 @@ RUN docker-php-ext-install mysqli
 # Configure Apache to listen on port 8080
 RUN sed -i 's/80/8080/g' /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
 
+# Set environment variables
+ENV DB_HOST=db
+ENV DB_USER=root
+ENV DB_PASSWORD=root
+ENV DB_NAME=logowanie
+
 RUN chown -R appuser:appuser /var/www/html
 
 USER appuser
