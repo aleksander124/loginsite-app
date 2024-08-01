@@ -1,8 +1,8 @@
 <?php
-$host = "openshift-deployment-site-php-login-site-db-service";
-$db_user = "root";
-$db_password = "root";
-$db_name = "logowanie";
+$host = getenv('DB_HOST') ?: 'localhost';
+$db_user = getenv('DB_USER') ?: 'root';
+$db_password = getenv('DB_PASSWORD') ?: '';
+$db_name = getenv('DB_NAME') ?: '';
 
 // Establish a connection to the database
 $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);

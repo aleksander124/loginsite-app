@@ -22,7 +22,8 @@ try {
     $stmt->execute();
     $user = $stmt->fetch();
 
-    if ($user && password_verify($unslashed_password, $user['pass'])) { // Use the unslashed password for verification
+//     TODO: that was changed from pass -> password changes in database
+    if ($user && password_verify($unslashed_password, $user['password'])) {
         $_SESSION['zalogowany'] = true;
         $_SESSION['id'] = $user['id'];
         $_SESSION['user'] = $user['user'];
