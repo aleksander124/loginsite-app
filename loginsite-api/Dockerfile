@@ -3,21 +3,35 @@ FROM python:3.9-slim AS build
 
 WORKDIR /app
 
-COPY requirements.txt /app/
-RUN pip install --no-cache-dir -r requirements.txt
+# Create a virtual environment and activate it
+RUN python -m venv /venv
 
+# Install dependencies into the virtual environment
+RUN /venv/bin/pip install --upgrade pip
+
+COPY requirements.txt /app/
+
+RUN /venv/bin/pip install -r requirements.txt
+
+# Copy application code into the build stage
 COPY . /app
 
 # Runtime Stage
 FROM python:3.9-slim
 
+# Create a new user 'api-user'
 RUN groupadd -r api-user && useradd -m --no-log-init -r -g api-user api-user
 
 WORKDIR /app
 
-# Copy only the necessary files from the build stage
+# Copy virtual environment and application files from the build stage
+COPY --from=build /venv /venv
 COPY --from=build /app /app
 
+# Set environment variables
+ENV PATH="/venv/bin:$PATH"
+
+# Change ownership of the /app directory to the non-root user
 RUN chown -R api-user:api-user /app
 
 USER api-user
