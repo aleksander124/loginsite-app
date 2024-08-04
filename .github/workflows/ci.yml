@@ -46,3 +46,8 @@ jobs:
         run: |
           docker build -t ${{ env.QUAY_REGISTRY }}/aleksander124/loginsite-db:${{ env.TAG }} -f loginsite-db/Dockerfile loginsite-db
           docker push ${{ env.QUAY_REGISTRY }}/aleksander124/loginsite-db:${{ env.TAG }}
+
+      - name: Build and push Docker image for loginsite-api
+        run: |
+          docker build -t ${{ env.QUAY_REGISTRY }}/aleksander124/loginsite-api:${{ env.TAG }} -f loginsite-api/Dockerfile loginsite-api
+          docker push ${{ env.QUAY_REGISTRY }}/aleksander124/loginsite-api:${{ env.TAG }}
