@@ -7,9 +7,10 @@ services:
     networks:
       - loginsite
     ports:
-      - "3306:3306"  # Default MySQL port, adjust if necessary
+      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
+
   loginsite-front:
     image: quay.io/aleksander124/loginsite-front:v2
     container_name: loginsite-front
@@ -17,7 +18,7 @@ services:
       - loginsite
       - traefik-network
     ports:
-      - "8090:8090"  # Maps container port 8090 to host port 8090
+      - "8090:8090"
     environment:
       DB_HOST: loginsite-db
       DB_USER: root
@@ -25,6 +26,25 @@ services:
       DB_NAME: logowanie
     labels:
       - "traefik.enable=true"
+
+  loginsite-api:
+    image: quay.io/aleksander124/loginsite-api:20240804.183337
+    container_name: loginsite-api
+    networks:
+      - loginsite
+      - traefik-network
+    ports:
+      - "9100:9100"
+    environment:
+      DATABASE_HOSTNAME: loginsite-db
+#      DATABASE_USER: root
+#      DATABASE_PASSWORD: root
+#      DATABASE_NAME: logowanie
+#      DATABASE_PORT: 3306
+    labels:
+      - "traefik.enable=true"
+    depends_on:
+      - loginsite-db
 
 networks:
   loginsite:
