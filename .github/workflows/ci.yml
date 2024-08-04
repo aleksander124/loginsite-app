@@ -7,7 +7,6 @@ on:
 
 env:
   QUAY_REGISTRY: quay.io
-  IMAGE_TAG: v2
 
 jobs:
   build-and-push:
@@ -27,13 +26,28 @@ jobs:
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_PASSWORD }}
 
+#      TODO: Change those tags later based on build and date
+      - name: Get current date and build number
+        id: vars
+        run: |
+          DATE=$(date +'%Y%m%d')
+          TIME=$(date +'%H%M%S')
+          TAG="${DATE}.${TIME}"
+          echo "TAG=$TAG" >> $GITHUB_ENV
+        shell: bash
+
       - name: Build and push Docker image for loginsite-front
         run: |
-          docker build -t ${{ env.QUAY_REGISTRY }}/aleksander124/loginsite-front:${{ env.IMAGE_TAG }} -f loginsite-front/Dockerfile loginsite-front
-          docker push ${{ env.QUAY_REGISTRY }}/aleksander124/loginsite-front:${{ env.IMAGE_TAG }}
+          docker build -t ${{ env.QUAY_REGISTRY }}/aleksander124/loginsite-front:${{ env.TAG }} -f loginsite-front/Dockerfile loginsite-front
+          docker push ${{ env.QUAY_REGISTRY }}/aleksander124/loginsite-front:${{ env.TAG }}
 
       # Build and push the Docker image for loginsite-db
       - name: Build and push Docker image for loginsite-db
         run: |
-          docker build -t ${{ env.QUAY_REGISTRY }}/aleksander124/loginsite-db:${{ env.IMAGE_TAG }} -f loginsite-db/Dockerfile loginsite-db
-          docker push ${{ env.QUAY_REGISTRY }}/aleksander124/loginsite-db:${{ env.IMAGE_TAG }}
+          docker build -t ${{ env.QUAY_REGISTRY }}/aleksander124/loginsite-db:${{ env.TAG }} -f loginsite-db/Dockerfile loginsite-db
+          docker push ${{ env.QUAY_REGISTRY }}/aleksander124/loginsite-db:${{ env.TAG }}
+
+      - name: Build and push Docker image for loginsite-api
+        run: |
+          docker build -t ${{ env.QUAY_REGISTRY }}/aleksander124/loginsite-api:${{ env.TAG }} -f loginsite-api/Dockerfile loginsite-api
+          docker push ${{ env.QUAY_REGISTRY }}/aleksander124/loginsite-api:${{ env.TAG }}

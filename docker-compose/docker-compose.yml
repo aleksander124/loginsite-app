@@ -1,8 +1,17 @@
 version: '3.8'
 
 services:
+  loginsite-db:
+    image: quay.io/aleksander124/loginsite-db:v2
+    container_name: loginsite-db
+    networks:
+      - loginsite
+    ports:
+      - "3306:3306"  # Default MySQL port, adjust if necessary
+    environment:
+      MYSQL_ROOT_PASSWORD: root
   loginsite-front:
-    image: quay.io/aleksander124/loginsite-front:latest
+    image: quay.io/aleksander124/loginsite-front:v2
     container_name: loginsite-front
     networks:
       - loginsite
@@ -14,6 +23,8 @@ services:
       DB_USER: root
       DB_PASSWORD: root
       DB_NAME: logowanie
+    labels:
+      - "traefik.enable=true"
 
 networks:
   loginsite:
