@@ -1,8 +1,8 @@
 <?php
-// Ensure that the session is started at the beginning of the script
+// Ensure that the session is started at the beginning of the script.
 session_start();
 
-// Redirect to index.php if the user is not logged in
+// Redirect to index.php if the user is not logged in.
 if (!isset($_SESSION['zalogowany'])){
     header('Location: index.php');
     exit();

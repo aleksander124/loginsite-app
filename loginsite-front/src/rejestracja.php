@@ -6,7 +6,7 @@ if (isset($_POST['email'])){
     $haslo1 = $_POST['haslo1'];
     $haslo2 = $_POST['haslo2'];
 
-    // Validate input
+    // Validate input.
     $errors = array();
 
     if (strlen($nick) < 3 || strlen($nick) > 20){
@@ -34,9 +34,9 @@ if (isset($_POST['email'])){
     }
 
     if (empty($errors)) {
-        // All input is valid, proceed with registration
+        // All input is valid, proceed with registration.
 
-        // Use prepared statements to prevent SQL injection
+        // Use prepared statements to prevent SQL injection.
         require_once "connect.php";
         $conn = new mysqli($host, $db_user, $db_password, $db_name);
 
@@ -59,7 +59,7 @@ if (isset($_POST['email'])){
         }
 
         if (empty($errors)) {
-            // Hash the password
+            // Hash the password.
             $haslo_hash = password_hash($haslo1, PASSWORD_DEFAULT);
 
             $stmt = $conn->prepare("INSERT INTO uzytkownicy VALUES (NULL, ?, ?, ?)");

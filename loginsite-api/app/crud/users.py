@@ -1,6 +1,12 @@
+import bcrypt
 from sqlalchemy.orm import Session
 from ..models.users import User
 from ..schemas.users import UserCreate
+
+
+def hash_password(password: str) -> str:
+    """Hash a password using bcrypt."""
+    return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
 
 def create_user(db: Session, user: UserCreate):
@@ -9,6 +15,18 @@ def create_user(db: Session, user: UserCreate):
     db.commit()
     db.refresh(db_user)
     return db_user
+
+# def create_user(db: Session, user: UserCreate):
+#     hashed_password = hash_password(user.password)
+#     db_user = User(
+#         user=user.user,
+#         email=user.email,
+#         password=hashed_password
+#     )
+#     db.add(db_user)
+#     db.commit()
+#     db.refresh(db_user)
+#     return db_user
 
 
 def get_user(db: Session, user_id: int):
